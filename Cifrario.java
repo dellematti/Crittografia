@@ -4,6 +4,8 @@ import java.io.File;
 
 public class Cifrario{
 
+    // l h modificato
+
     // CAMPI
 
     private final boolean[] chiave;
