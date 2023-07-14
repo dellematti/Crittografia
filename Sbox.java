@@ -7,10 +7,16 @@ import java.io.File;
 
 public class Sbox {
 
+    /**Sbox */
     int[][] box;
 
 
-    public Sbox(int numeroBox) {         //ricevo numeroBox da 1 a 8 compresi
+    /**costruisce un sbox
+     * 
+     * @param numeroBox il numero del sbox
+     * @throws IllegalArgumentException se il numero box è maggiore di 8 o minore di 1
+     */
+    public Sbox(int numeroBox) {         
         List<String> list = new ArrayList<String>();
         try{                        //potrei toglierlo dal costruttore
             File file = new File("Sbox.txt");
@@ -33,12 +39,18 @@ public class Sbox {
     }
 
 
-
-    public boolean[] comprimi (boolean[] inputSBOX) {     //ricevo i 6 bit che vanno nel box e restituisco i 4 che escono
+    /**
+     * uso l' sbox per comprimere 6 bit
+     * 
+     * @param insputSBOX i 6 bit da comprimere
+     * @return il risultato della compressione, saranno sempre 4 bit
+     * @throws IllegalArgumentException se inputSBOX ha lunghezza != 6
+     */
+    public boolean[] comprimi (boolean[] inputSBOX) {    
         boolean[] outputCompressione = new boolean[4];
-        
+        //i due bit ai lati sono la riga, i 4 centrali la colonna
         String tmpColonna = "";
-        for ( int i = 1; i < 5; i++){     //i due ai lati è la riga, i 4 centrali la colonna
+        for ( int i = 1; i < 5; i++){     
             if ( inputSBOX[i] == false) tmpColonna += 0;    
             else tmpColonna += 1;
         }

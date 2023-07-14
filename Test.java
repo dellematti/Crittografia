@@ -3,29 +3,11 @@ import java.util.Scanner;
 public class Test{
 
 
-//     private static boolean[] string2binary(String plainTextparola, Integer indice) {
-//         boolean[] plainText = new boolean[64];
-//         // String plainTextparola = "quaderno";
-//         // int indice = 0;
-// 
-//         for (int i = 0; i < plainTextparola.length(); i++) {
-//             int decVal = (int) plainTextparola.charAt(i);    // converto a int i singoli caratteri della stringa
-//             String binario = Integer.toBinaryString(decVal);  //binario del carattere
-//             String binarioOtto = String.format("%08d", Integer.parseInt(binario));   //binario del carattere a 8 bit
-//             for ( int j = 0; j < 8; j++){
-//                 if (binarioOtto.charAt(j) == '1') plainText[indice + j] = true;
-//                 else plainText[indice + j] = false;
-//             }
-//             indice += 8;
-//         }
-//         return plainText;
-//     }
-
 
     public static void main(final String[] args) {
 
         // CONVERTIRE DA PAROLE A BINARIO   
-        //farò un altra classe, e da dentro il cifrario convertirò le parole in binario
+        // si può fare un altra classe
         // considero l ascii fino a 128, uso 8 bit alla volta
 
         // per ora per comodità uso parole di al massimo 8 lettere, eseguo la cifratura in un solo blocco des
@@ -34,9 +16,8 @@ public class Test{
         Scanner myObj = new Scanner(System.in);  // Create a Scanner object
         String plainTextparola = myObj.nextLine();  // Read user input
 
-        // String plainTextparola = "mare";
         boolean[] plainText = new boolean[64];
-        int indice = 0;
+        int indice = 0;  // indice mi serve per sapere quanti bit del vettore ho utilizzato (in caso di testi minori di 8 lettere)
 
         for (int i = 0; i < plainTextparola.length(); i++) {
             int decVal = (int) plainTextparola.charAt(i);    // converto a int i singoli caratteri della stringa
@@ -48,11 +29,10 @@ public class Test{
             }
             indice += 8;
         }
-        // System.out.println(indice);
      
         // CHIAVE         
         // l indice stavolta non serve, la chiave in teoria dovrebbe essere sempre di 64 bit ( o 8 caratteri, scelti in maniera casuale) 
-        String chiaveParola = "computer";
+        String chiaveParola = "password";
         boolean[] chiave = new boolean[64];
 
         for (int i = 0; i < chiaveParola.length(); i++) {
@@ -65,14 +45,9 @@ public class Test{
             }
         }
 
-        // boolean[] plainText = string2binary(plainTextparola, indice);   COME FARE UN METODO CHE RESTITUISCE L INDICE ?
-// il problema è che se ho una stringa ad esempio di 7 lettere, uso 56 bit su 64, ma poi mi conta anche gli altri 8 bit restanti
-// (tutti uguali a zero), quindi mi serve un indice che mi dicce fino a dove sono arrivato nel vettore di bit
-
-
-        Cifrario cifrario = new Cifrario (chiave);    //devo modificare per passare la stringa e non la sequenza di bit
+        Cifrario cifrario = new Des (chiave);    
         System.out.println("Il plaintext è : " + plainTextparola + "\nE la chiave è : " + chiaveParola);  
-        boolean[] cipherText = cifrario.cifra(plainText);    //ho il testo cifrato in bit  
+        boolean[] cipherText = cifrario.cifra(plainText);    // ora ho il testo cifrato in bit  
 
 
 
@@ -94,11 +69,7 @@ public class Test{
                 else ottoBit += "1";
         }
         System.out.println("\nLa parola cifrata è : " + cipherTextStringa);
-
-
         //ora riconverto il cipherText in plainText
-
-
 
 
         boolean[] decifrato = cifrario.decifra(cipherText);
@@ -120,7 +91,6 @@ public class Test{
                 else ottoBit += "1";
         }
         System.out.println("la parola decifrata è : " + stringaDecifrata);
-
 
 
         // se non uso l indice mi aggiunge delle lettere a caso alla fine della parola che ho cifrato
